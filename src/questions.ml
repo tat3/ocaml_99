@@ -1,17 +1,8 @@
-let opt2str = function
-    | None -> "None"
-    | Some x -> x;;
-
-let print_option a = print_string (opt2str a ^ "\n");;
-
 (* 1 *)
 let rec last = function
     | [] -> None
     | [a] -> Some a
     | a :: b -> last b;;
-
-(* print_option (last ["a"; "b"; "c"; "d"]);;
-print_option (last []); *)
 
 (* 2 *)
 let rec last_two l =

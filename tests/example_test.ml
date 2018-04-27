@@ -1,9 +1,16 @@
 open OUnit2
 
-(* say関数のテスト関数、テストの説明と関数でテストを表現する *)
+(* Basic test *)
 let say_test =
-  "echo string" >:: (fun _ -> assert_equal (Example.say "hello") "hello")
+    "echo string" >:: (fun _ -> assert_equal (Example.say "hello") "hello")
 
-(* このテストモジュールのすべてのテストをまとめる *)
+let q00 =
+    "q-00" >:: (fun _ -> assert_equal
+        (Questions.last ["a"; "b"; "c"; "d"])
+        (Some "d"))
+
 let tests =
-  "all_tests" >::: [ say_test; ]
+    "all_tests" >::: [
+        say_test;
+        q00; 
+    ]
