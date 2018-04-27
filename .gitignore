@@ -1,0 +1,30 @@
+.DS_Store
+_oasis
+
+*.annot
+*.cmo
+*.cma
+*.cmi
+*.a
+*.o
+*.cmx
+*.cmxs
+*.cmxa
+*.cmt
+
+# ocamlbuild working directory
+_build/
+
+# ocamlbuild targets
+*.byte
+*.native
+
+# oasis generated files
+setup.data
+setup.log
+
+# omake files
+*.omc
+*.om
+.omakedb
+.omakedb.lock

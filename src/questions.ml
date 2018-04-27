@@ -81,11 +81,11 @@ let encode2 l =
         if cnt = 1 then One elm
         else Many (cnt, elm) in
     let rec loop count acc = function
-    | [] -> []
-    | [a] -> (create_tuple (count + 1) a) :: acc
-    | a :: (b :: _ as t) ->
-        if a = b then loop (count + 1) acc t
-        else loop 0 ((create_tuple (count + 1) a) :: acc) t in
+        | [] -> []
+        | [a] -> (create_tuple (count + 1) a) :: acc
+        | a :: (b :: _ as t) ->
+            if a = b then loop (count + 1) acc t
+            else loop 0 ((create_tuple (count + 1) a) :: acc) t in
     loop 0 [] l;;
 
 let decode l =
