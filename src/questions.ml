@@ -34,7 +34,7 @@ type 'a node =
     | One of 'a
     | Many of 'a node list;;
 
-let flattern l =
+let flatten l =
     let rec loop acc = function
         | [] -> acc
         | One x :: t -> loop (x :: acc) t
