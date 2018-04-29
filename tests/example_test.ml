@@ -1,102 +1,91 @@
 open OUnit2
 
+let q = Questions
+
 let test_eq name arg1 arg2 =
     name >:: (fun _ -> assert_equal arg1 arg2);;
 
+type 'a node =
+    | One of 'a
+    | Many of 'a node list
+
 type 'a rle =
     | One of 'a
-    | Many of int * 'a;;
+    | Many of int * 'a
 
 let tests = "all_tests" >::: [
 
-    "echo string" >:: (fun _ -> assert_equal (Example.say "hello") "hello");
+    test_eq "echo string" (Example.say "hello") "hello";
 
-    "q-01" >:: (fun _ -> assert_equal
+    test_eq "q-01"
         (Questions.last ["a"; "b"; "c"; "d"])
-        (Some "d")
-    );
+        (Some "d");
 
-    "q-02" >:: (fun _ -> assert_equal
+    test_eq "q-02"
         (Questions.last_two [ "a" ; "b" ; "c" ; "d" ])
-        (Some ("c", "d"))
-    );
+        (Some ("c", "d"));
 
-    "q-03" >:: (fun _ -> assert_equal
+    test_eq "q-03"
         (Questions.at 3 [ "a" ; "b"; "c"; "d"; "e" ])
-        (Some "c")
-    );
+        (Some "c");
 
-    "q-04" >:: (fun _ -> assert_equal
+    test_eq "q-04"
         (Questions.length [ "a" ; "b" ; "c"])
-        (3)
-    );
+        3;
 
-    "q-05" >:: (fun _ -> assert_equal
+    test_eq "q-05"
         (Questions.rev ["a"; "b"; "c"])
-        (["c"; "b"; "a"])
-    );
+        ["c"; "b"; "a"];
 
-    "q-06" >:: (fun _ -> assert_equal
+    test_eq "q-06"
         (Questions.is_palindrome [ "x" ; "a" ; "m" ; "a" ; "x" ])
-        (true)
-    );
+        true;
 
-    "q-07" >:: (fun _ -> assert_equal
+    test_eq "q-07"
         (Questions.flatten [ One "a" ; Many [ One "b" ; Many [ One "c" ; One "d" ] ; One "e" ] ])
-        (["a"; "b"; "c"; "d"; "e"])
-    );
+        ["a"; "b"; "c"; "d"; "e"];
 
-    "q-08" >:: (fun _ -> assert_equal
+    test_eq "q-08"
         (Questions.compress ["a";"a";"a";"a";"b";"c";"c";"a";"a";"d";"e";"e";"e";"e"])
-        (["a"; "b"; "c"; "a"; "d"; "e"])
-    );
+        ["a"; "b"; "c"; "a"; "d"; "e"];
 
-    "q-09" >:: (fun _ -> assert_equal
+    test_eq "q-09"
         (Questions.pack ["a";"a";"a";"a";"b";"c";"c";"a";"a";"d";"d";"e";"e";"e";"e"])
-        ([["a"; "a"; "a"; "a"]; ["b"]; ["c"; "c"]; ["a"; "a"]; ["d"; "d"];
- ["e"; "e"; "e"; "e"]])
-    );
+        [["a"; "a"; "a"; "a"]; ["b"]; ["c"; "c"]; ["a"; "a"]; ["d"; "d"]; ["e"; "e"; "e"; "e"]];
 
-    (* "q-10" >:: (fun _ -> assert_equal
-        (Questions.encode ["a";"a";"a";"a";"b";"c";"c";"a";"a";"d";"e";"e";"e";"e"])
-        ([(4, "a"); (1, "b"); (2, "c"); (2, "a"); (1, "d"); (4, "e")])
-    ); *)
-    test_eq "q-10" 
+    test_eq "q-10"
         (Questions.encode ["a";"a";"a";"a";"b";"c";"c";"a";"a";"d";"e";"e";"e";"e"])
         [(4, "a"); (1, "b"); (2, "c"); (2, "a"); (1, "d"); (4, "e")];
 
-    "q-11" >:: (fun _ -> assert_equal
+    test_eq "q-11"
         (Questions.encode2 ["a";"a";"a";"a";"b";"c";"c";"a";"a";"d";"e";"e";"e";"e"])
-        ([Many (4, "a"); One "b"; Many (2, "c"); Many (2, "a"); One "d";
- Many (4, "e")])
-    );
+        [Many (4, "a"); One "b"; Many (2, "c"); Many (2, "a"); One "d"; Many (4, "e")];
 
-    "q-12" >:: (fun _ -> assert_equal
+    test_eq "q-12"
         (Questions.decode [Many (4,"a"); One "b"; Many (2,"c"); Many (2,"a"); One "d"; Many (4,"e")])
-        (["a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e"])
-    );
+        ["a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e"];
 
-    "q-13" >:: (fun _ -> assert_equal
+    test_eq "q-13"
         (Questions.encode3 ["a";"a";"a";"a";"b";"c";"c";"a";"a";"d";"e";"e";"e";"e"])
-        ([Many (4, "a"); One "b"; Many (2, "c"); Many (2, "a"); One "d";
- Many (4, "e")])
-    );
+        [Many (4, "a"); One "b"; Many (2, "c"); Many (2, "a"); One "d"; Many (4, "e")];
 
-    "q-14" >:: (fun _ -> assert_equal
+    test_eq "q-14"
         (Questions.duplicate ["a";"b";"c";"c";"d"])
-        (["a"; "a"; "b"; "b"; "c"; "c"; "c"; "c"; "d"; "d"])
-    );
+        ["a"; "a"; "b"; "b"; "c"; "c"; "c"; "c"; "d"; "d"];
 
-    "q-15" >:: (fun _ -> assert_equal
+    test_eq "q-15"
         (Questions.replicate ["a";"b";"c"] 3)
-        (["a"; "a"; "a"; "b"; "b"; "b"; "c"; "c"; "c"])
-    );
+        ["a"; "a"; "a"; "b"; "b"; "b"; "c"; "c"; "c"];
 
     test_eq "q-16" (Questions.drop ["a";"b";"c";"d";"e";"f";"g";"h";"i";"j"] 3)
         ["a"; "b"; "d"; "e"; "g"; "h"; "j"];
 
     test_eq "q-17" (Questions.split ["a";"b";"c";"d";"e";"f";"g";"h";"i";"j"] 3)
         (["a"; "b"; "c"], ["d"; "e"; "f"; "g"; "h"; "i"; "j"]);
+
+    test_eq "q-17-2" (Questions.split ["a";"b";"c";"d"] 5)
+        (["a"; "b"; "c"; "d"], []);
+
 
     test_eq "q-18" (Questions.slice ["a";"b";"c";"d";"e";"f";"g";"h";"i";"j"] 2 6)
         ["c"; "d"; "e"; "f"; "g"];
