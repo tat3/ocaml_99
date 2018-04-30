@@ -214,6 +214,7 @@ let rec extract k li =
             let without_h = extract k t in
     with_h @ without_h
 
+(* I can't understand... *)
 let group li sizes =
     let initial = List.map (fun size -> size, []) sizes in
 
@@ -232,4 +233,4 @@ let group li sizes =
         | h :: t -> List.concat (List.map (prepend h) (aux t)) in
     let all = aux li in
     let complete = List.filter (List.for_all (fun (x, _) -> x = 0)) all in
-    List.map (List.map snd) complete
+    List.map (List.map snd) complete;;

@@ -1,0 +1,22 @@
+opam-version: "1.2"
+version: "0.1"
+authors: "tat"
+maintainer: "tat"
+homepage: "https://github.com/tat3/ocaml_99"
+bug-reports: "https://github.com/tat3/ocaml_99/issues"
+dev-repo: "https://github.com/tat3/ocaml_99.git"
+license: "MIT"
+build: [
+]
+install: [
+]
+remove: [
+]
+depends: [
+    "ocamlfind"
+    "omake"
+    "ounit"
+]
+available: [
+  ocaml-version >= "4.03.0"
+]
