@@ -1,8 +1,0 @@
-(* OASIS_START *)
-(* DO NOT EDIT (digest: 7b6ec09dbdbe65585aba46499f547047) *)
-
-Authors of example:
-
-* tat
-
-(* OASIS_STOP *)

@@ -4,6 +4,12 @@
 _oasis
 setup.data
 setup.log
+META
+_tags
+AUTHORS.txt
+INSTALL.txt
+myocamlbuild.ml
+README.txt
 
 *.annot
 *.cmo
@@ -16,12 +22,15 @@ setup.log
 *.cmxa
 *.cmt
 
+
 # ocamlbuild working directory
 _build/
 
 # ocamlbuild targets
 *.byte
 *.native
+*.mldylib
+*.mllib
 
 # oasis generated files
 setup.data
