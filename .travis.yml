@@ -1,0 +1,9 @@
+language: c
+sudo: required
+install: bash -ex .travis-ocaml.sh
+script: make configure CONFIGUREFLAGS=--enable-tests; make test
+env:
+  - OCAML_VERSION=4.06
+os:
+  - linux
+  - osx

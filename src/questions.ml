@@ -213,3 +213,23 @@ let rec extract k li =
             let with_h = List.map (fun l -> h :: l) (extract (k - 1) t) in
             let without_h = extract k t in
     with_h @ without_h
+
+let group li sizes =
+    let initial = List.map (fun size -> size, []) sizes in
+
+    let prepend p li =
+        let emit l acc = l :: acc in
+        let rec aux emit acc = function
+            | [] -> emit [] acc
+            | (n, l) as h :: t ->
+                let acc =
+                    if n > 0 then emit ((n - 1, p :: l) :: t) acc
+                    else acc in
+                aux (fun l acc -> emit (h :: l) acc) acc t in
+        aux emit [] li in
+    let rec aux = function
+        | [] -> [initial]
+        | h :: t -> List.concat (List.map (prepend h) (aux t)) in
+    let all = aux li in
+    let complete = List.filter (List.for_all (fun (x, _) -> x = 0)) all in
+    List.map (List.map snd) complete
