@@ -13,10 +13,6 @@ install: [
 remove: [
 ]
 depends: [
-    "ocamlfind"
-    "omake"
-    "ounit"
-    "oasis"
 ]
 available: [
   ocaml-version >= "4.03.0"
