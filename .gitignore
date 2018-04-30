@@ -1,5 +1,9 @@
 .DS_Store
+
+# oasis
 _oasis
+setup.data
+setup.log
 
 *.annot
 *.cmo
