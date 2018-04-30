@@ -1,6 +1,5 @@
-open OUnit2
+open OUnit2;;
 
-let q = Questions
 
 let test_eq name arg1 arg2 =
     name >:: (fun _ -> assert_equal arg1 arg2);;
@@ -11,7 +10,7 @@ type 'a node =
 
 type 'a rle =
     | One of 'a
-    | Many of int * 'a
+    | Many of int * 'a;;
 
 let tests = "all_tests" >::: [
 
@@ -98,4 +97,33 @@ let tests = "all_tests" >::: [
 
     test_eq "q-20" (Questions.remove_at 1 ["a";"b";"c";"d"])
         ["a"; "c"; "d"];
-]
+
+    test_eq "q-21"
+        (Questions.insert_at "alfa" 1 ["a";"b";"c";"d"])
+        ["a"; "alfa"; "b"; "c"; "d"];
+
+    test_eq "q-22"
+        (Questions.range 4 9)
+        [4; 5; 6; 7; 8; 9];
+
+    test_eq "q-22-2"
+        (Questions.range 9 4)
+        [9; 8; 7; 6; 5; 4];
+
+    test_eq "q-23"
+        (Questions.rand_select ["a";"b";"c";"d";"e";"f";"g";"h"] 3)
+        ["g"; "d"; "a"];
+
+    (* test_eq "q-24"
+        (Questions.lotto_select 6 49)
+        [10; 20; 44; 22; 41; 2]; *)
+
+    (* test_eq "q-25"
+        (Questions.permutation ["a"; "b"; "c"; "d"; "e"; "f"])
+        ["a"; "e"; "f"; "b"; "d"; "c"]; *)
+
+     test_eq "q-26"
+        (Questions.extract 2 ["a";"b";"c";"d"])
+        [["a"; "b"]; ["a"; "c"]; ["a"; "d"]; ["b"; "c"]; ["b"; "d"]; ["c"; "d"]];
+
+ ]

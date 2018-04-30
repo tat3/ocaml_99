@@ -155,3 +155,61 @@ let rotate li n =
 let rec remove_at n = function
     | [] -> []
     | h :: t -> if n = 0 then t else h :: remove_at (n - 1) t
+
+let rec insert_at str index = function
+    | [] -> [str]
+    | h :: t as l ->
+        if index = 0 then str :: l
+        else h :: insert_at str (index - 1) t
+
+let insert_at str index li =
+    let rec aux ind acc = function
+        | [] -> acc
+        | h :: t as l ->
+            if ind = 0 then aux (ind - 1) (h :: str :: acc) t
+        else aux (ind - 1) (h :: acc) t in
+    List.rev (aux index [] li)
+
+let range a b =
+    let rec aux a b acc =
+        if a > b then acc else aux (a + 1) b (a :: acc) in
+    if a < b then List.rev (aux a b []) else aux b a [];;
+
+let rand_select li n =
+    let rec extract acc n = function
+        | [] -> raise Not_found
+        | h :: t -> if n = 0 then (h, acc @ t) else extract (h :: acc) (n - 1) t in
+    let extract_rand li len =
+        extract [] (Random.int len) li in
+    let rec aux n acc li len =
+        if n = 0 then acc else
+            let picked, rest = extract_rand li len in
+            aux (n - 1) (picked :: acc) rest (len - 1) in
+    let len = List.length li in
+    aux (min n len) [] li len
+
+let lotto_select num n_max =
+    rand_select (range 1 n_max) num
+
+let permutation li =
+    let rec extract acc n = function
+        | [] -> raise Not_found
+        | h :: t -> if n = 0 then (h, acc @ t) else extract (h :: acc) (n - 1) t in
+    let extract_rand li len =
+        extract [] (Random.int len) li in
+    let rec aux acc l len =
+        if len = 0 then acc
+        else
+            let picked, rest = extract_rand l len in
+            aux (picked :: acc) rest (len - 1)
+    in
+    aux [] li (List.length li)
+
+let rec extract k li =
+    if k <= 0 then [[]]
+    else match li with
+        | [] -> []
+        | h :: t ->
+            let with_h = List.map (fun l -> h :: l) (extract (k - 1) t) in
+            let without_h = extract k t in
+    with_h @ without_h
