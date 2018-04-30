@@ -214,7 +214,7 @@ let rec extract k li =
             let without_h = extract k t in
     with_h @ without_h
 
-(* I can't understand... *)
+(* Gave up understanding *)
 let group li sizes =
     let initial = List.map (fun size -> size, []) sizes in
 
@@ -234,3 +234,16 @@ let group li sizes =
     let all = aux li in
     let complete = List.filter (List.for_all (fun (x, _) -> x = 0)) all in
     List.map (List.map snd) complete;;
+
+let rec insert cmp e = function
+    | [] -> [e]
+    | h :: t as l -> if cmp e h <= 0 then e :: l else h :: insert cmp e t
+
+let rec sort cmp = function
+    | [] -> []
+    | h :: t -> insert cmp h (sort cmp t)
+
+let length_sort lists =
+    let lists = List.map (fun l -> List.length l, l) lists in
+    let lists = sort (fun a b -> compare (fst a) (fst b)) lists in
+    List.map snd lists
